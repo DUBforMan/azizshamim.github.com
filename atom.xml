@@ -4,7 +4,7 @@
   <title><![CDATA[{blog}]]></title>
   <link href="http://azizshamim.github.com/atom.xml" rel="self"/>
   <link href="http://azizshamim.github.com/"/>
-  <updated>2012-10-31T15:01:12-05:00</updated>
+  <updated>2012-10-31T15:02:46-05:00</updated>
   <id>http://azizshamim.github.com/</id>
   <author>
     <name><![CDATA[Aziz Shamim]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rapid prototyping with vagrant]]></title>
-    <link href="http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant/"/>
+    <title type="html"><![CDATA[Rapid prototyping with vagrant-hitch]]></title>
+    <link href="http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/"/>
     <updated>2012-10-25T16:17:00-05:00</updated>
-    <id>http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant</id>
+    <id>http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch</id>
     <content type="html"><![CDATA[<p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/ashamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application &#8220;by tuesday because we have a zillion new users&#8221;.</p>
 
 <p>The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in <a href="http://vagrantup.com">Vagrant</a> lead to a pretty blatant bottleneck: the <a href="http://vagrantup.com/v1/docs/vagrantfile.html">Vagrantfile</a>.</p>
