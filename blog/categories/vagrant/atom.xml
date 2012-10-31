@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[{blog}]]></title>
-  <link href="http://azizshamim.github.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: vagrant | {blog}]]></title>
+  <link href="http://azizshamim.github.com/blog/categories/vagrant/atom.xml" rel="self"/>
   <link href="http://azizshamim.github.com/"/>
   <updated>2012-10-31T15:28:13-05:00</updated>
   <id>http://azizshamim.github.com/</id>
@@ -18,7 +18,7 @@
     <link href="http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/"/>
     <updated>2012-10-25T16:17:00-05:00</updated>
     <id>http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch</id>
-    <content type="html"><![CDATA[<p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application &#8220;by tuesday because we have a zillion new users&#8221;.</p>
+    <content type="html"><![CDATA[<p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application "by tuesday because we have a zillion new users".</p>
 
 <p>The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in <a href="http://vagrantup.com">Vagrant</a> lead to a pretty blatant bottleneck: the <a href="http://vagrantup.com/v1/docs/vagrantfile.html">Vagrantfile</a>.</p>
 
@@ -92,8 +92,7 @@ test2:
 </ul>
 
 
-<p>Lets take a more complicated data structure. We&#8217;re modeling a simple 3 tier system with redundant databases for a startup called &#8220;SuperFastJellyfish:</p>
-
+<p>Lets take a more complicated data structure. We're modeling a simple 3 tier system with redundant databases for a startup called "SuperFastJellyfish:
 <div><script src='https://gist.github.com/3988675.js?file=1_superfastjellyfish.yml'></script>
 <noscript><pre><code>default: &amp;default
   vbox: superfastjellyfish-aws
@@ -115,9 +114,7 @@ db1:
 db2:
   &lt;&lt;: *default</code></pre></noscript></div>
 
-
-<p>This configuration will load up a simple infrastructure of 3 webservers, 3 application servers and 2 database servers. Now lets try to get them slightly different:</p>
-
+This configuration will load up a simple infrastructure of 3 webservers, 3 application servers and 2 database servers. Now lets try to get them slightly different:
 <div><script src='https://gist.github.com/3988675.js?file=2_superfastjellyfish.yml'></script>
 <noscript><pre><code>default: &amp;default
   vbox: superfastjellyfish-aws
@@ -147,9 +144,7 @@ db2:
   &lt;&lt;: *default
   ip: 192.168.1.23</code></pre></noscript></div>
 
-
-<p>Now we&#8217;ve got different IP Addresses assigned to the nodes. Lets get a little more complexity:</p>
-
+Now we've got different IP Addresses assigned to the nodes. Lets get a little more complexity:
 <div><script src='https://gist.github.com/3988675.js?file=3_superfastjellyfish.yml'></script>
 <noscript><pre><code>default: &amp;default
   vbox: superfastjellyfish-aws
@@ -197,12 +192,11 @@ db2:
   chef:
     roles:
       - database_slave</code></pre></noscript></div>
+</p>
 
+<p>Now, using more YAML relational trees, we've defined some additional defaults and chef roles for those defaults, and even some distinct roles for the database servers.</p>
 
-<p>Now, using more YAML relational trees, we&#8217;ve defined some additional defaults and chef roles for those defaults, and even some distinct roles for the database servers.</p>
-
-<p>Now lets take a look at the provisioner_chef.yml datafile and how it can be used:</p>
-
+<p>Now lets take a look at the provisioner_chef.yml datafile and how it can be used:
 <div><script src='https://gist.github.com/3988675.js?file=chef_provisioner.yml'></script>
 <noscript><pre><code>chef:
   log_level: 'debug'
@@ -210,12 +204,11 @@ db2:
   roles:
     - base
     - vagrant</code></pre></noscript></div>
-
+</p>
 
 <p>This chef provisioner configuration defines the log level for running chef-solo, the environment (if you use them) and the default roles that are assigned to every system using this provisioner. Since <em>base</em> is in here, we could safely remove it from the nodes.yml file.</p>
 
-<p>Now here&#8217;s the environment:</p>
-
+<p>Now here's the environment:
 <div><script src='https://gist.github.com/3988675.js?file=1_vagrant_status'></script>
 <noscript><pre><code>ashamim@ataxerxes:superfastjellyfish $ vagrant status
 Current VM states:
@@ -229,7 +222,7 @@ app3                     not created
 db1                      not created
 db2                      not created
 </code></pre></noscript></div>
-
+</p>
 
 <p>You can do a similar thing with <strong>provisioner_puppet.yml</strong>. For an example, see the <a href="https://github.com/fup/vagrant-hitch/tree/master/example">example</a> directory.</p>
 
