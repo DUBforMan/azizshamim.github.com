@@ -3,9 +3,9 @@ layout: post
 title: "Rapid prototyping with vagrant-hitch"
 date: 2012-10-25 16:17
 comments: true
-categories: 
+categories: "vagrant hitch devops"
 ---
-My former consulting partner [jfryman](http://github.com/jfryman) and [I](http://github.com/ashamim) had a few start-ups as clients who, inevitably, needed to deploy their application "by tuesday because we have a zillion new users".
+My former consulting partner [jfryman](http://github.com/jfryman) and [I](http://github.com/azizshamim) had a few start-ups as clients who, inevitably, needed to deploy their application "by tuesday because we have a zillion new users".
 
 The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in [Vagrant](http://vagrantup.com) lead to a pretty blatant bottleneck: the [Vagrantfile](http://vagrantup.com/v1/docs/vagrantfile.html).
 
