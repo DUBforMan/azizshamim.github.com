@@ -147,6 +147,78 @@ end
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/10/25/rapid-prototyping-with-vagrant/">Rapid Prototyping With Vagrant</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-25T16:17:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/ashamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application &#8220;by tuesday because we have a zillion new users&#8221;.</p>
+
+<p>The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in <a href="http://vagrantup.com">Vagrant</a> lead to a pretty blatant bottleneck: the <a href="http://vagrantup.com/v1/docs/vagrantfile.html">Vagrantfile</a>.</p>
+
+<p>Defining an environment with 20 different servers in some configuration that might overlap and might not is a complicated thing in the standard vagrant method:</p>
+
+<pre><code>Vagrant::Config.run do |config|
+  config.vm.define :web do |web_config|
+    web_config.vm.box = "web"
+    web_config.vm.network :hostonly, "10.1.1.1"
+    web_config.vm.forward_port 80, 8080
+    web_config.vm.provision :puppet do |puppet|
+      puppet.module_path = "moduledir"
+      puppet.manifest_file = "manifest/web_manifest.pp"
+    end
+  end
+
+  config.vm.define :db do |db_config|
+    db_config.vm.box = "db"
+    db_config.vm.network :hostonly, "10.1.1.2"
+    db_config.vm.forward_port 3306, 3306
+    db_config.vm.provision :puppet do |puppet|
+      puppet.module_path = "moduledir"
+      puppet.manifest_file = "manifest/db_manifest.pp"
+    end
+  end
+end
+</code></pre>
+
+<p>Now do this 20 times! ZOMG!</p>
+
+<p>So <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> came up with another way of doing this: <a href="https://github.com/fup/vagrant-hitch">Hitch!</a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/10/25/rapid-prototyping-with-vagrant/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -161,6 +233,10 @@ end
     
       <li class="post">
         <a href="/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/">Rapid prototyping with vagrant-hitch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/10/25/rapid-prototyping-with-vagrant/">Rapid prototyping with vagrant</a>
       </li>
     
   </ul>

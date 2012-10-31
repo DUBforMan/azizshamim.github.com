@@ -4,7 +4,7 @@
   <title><![CDATA[{blog}]]></title>
   <link href="http://azizshamim.github.com/atom.xml" rel="self"/>
   <link href="http://azizshamim.github.com/"/>
-  <updated>2012-10-31T15:02:46-05:00</updated>
+  <updated>2012-10-31T15:03:31-05:00</updated>
   <id>http://azizshamim.github.com/</id>
   <author>
     <name><![CDATA[Aziz Shamim]]></name>
@@ -50,6 +50,238 @@ end
 <p>Now do this 20 times! ZOMG!</p>
 
 <p>So <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> came up with another way of doing this: <a href="https://github.com/fup/vagrant-hitch">Hitch!</a>.</p>
+
+<!--more-->
+
+
+<p>What hitch does is allow you to define an entire infrastructure as a YAML data block, making use of advanced YAML features like <a href="http://en.wikipedia.org/wiki/YAML#Relational_trees">relational trees</a>:</p>
+
+<pre><code>default: &amp;default                   # The default configuration for every box
+  vbox: vbox-name
+  orgname: vagrant.test
+  puppet:
+    manifest_file: site.pp
+  ports:
+    http:
+      host: 10080
+      guest: 80
+    https:
+      host: 10443
+      guest: 443
+    mysql:
+      host: 13310
+      guest: 3306
+    tomcat:
+      host: 18080
+      guest: 8080
+test1:
+  &lt;&lt;: *default
+  vbox: vbox-dev-webserver          # here the default vbox is being overridden
+test2:
+  &lt;&lt;: *default
+</code></pre>
+
+<p>What are some conventions we adopted in order to build/use <a href="https://github.com/fup/vagrant-hitch">Hitch!</a>?</p>
+
+<ul>
+<li>The default config directory is <strong>./config</strong> relative to the Vagrantfile</li>
+<li>The node definition list is <strong>nodes.yml</strong></li>
+<li>The provisioners use <strong>provisioner_<name>.yml</strong> to configure the provisioner</li>
+<li>The network is <strong>:hostonly</strong></li>
+<li>The default manifest_file is in the manifest_path called <strong>&lt;hostname>.pp</strong></li>
+</ul>
+
+
+<p>Lets take a more complicated data structure. We&#8217;re modeling a simple 3 tier system with redundant databases for a startup called &#8220;SuperFastJellyfish:</p>
+
+<div><script src='https://gist.github.com/3988675.js?file=1_superfastjellyfish.yml'></script>
+<noscript><pre><code>default: &amp;default
+  vbox: superfastjellyfish-aws
+  orgname: superfastjellyfish.test
+web1:
+  &lt;&lt;: *default
+web2:
+  &lt;&lt;: *default
+web3:
+  &lt;&lt;: *default
+app1:
+  &lt;&lt;: *default
+app2:
+  &lt;&lt;: *default
+app3:
+  &lt;&lt;: *default
+db1:
+  &lt;&lt;: *default
+db2:
+  &lt;&lt;: *default</code></pre></noscript></div>
+
+
+<p>This configuration will load up a simple infrastructure of 3 webservers, 3 application servers and 2 database servers. Now lets try to get them slightly different:</p>
+
+<div><script src='https://gist.github.com/3988675.js?file=2_superfastjellyfish.yml'></script>
+<noscript><pre><code>default: &amp;default
+  vbox: superfastjellyfish-aws
+  orgname: superfastjellyfish.test
+web1:
+  &lt;&lt;: *default
+  ip: 192.168.1.2
+web2:
+  &lt;&lt;: *default
+  ip: 192.168.1.3
+web3:
+  &lt;&lt;: *default
+  ip: 192.168.1.4
+app1:
+  &lt;&lt;: *default
+  ip: 192.168.1.12
+app2:
+  &lt;&lt;: *default
+  ip: 192.168.1.13
+app3:
+  &lt;&lt;: *default
+  ip: 192.168.1.14
+db1:
+  &lt;&lt;: *default
+  ip: 192.168.1.22
+db2:
+  &lt;&lt;: *default
+  ip: 192.168.1.23</code></pre></noscript></div>
+
+
+<p>Now we&#8217;ve got different IP Addresses assigned to the nodes. Lets get a little more complexity:</p>
+
+<div><script src='https://gist.github.com/3988675.js?file=3_superfastjellyfish.yml'></script>
+<noscript><pre><code>default: &amp;default
+  vbox: superfastjellyfish-aws
+  orgname: superfastjellyfish.test
+  chef:
+    roles:
+      - base
+web_default: &amp;web_default
+  &lt;&lt;: *default
+  chef:
+    roles:
+      - web
+app_default: &amp;app_default
+  &lt;&lt;: *default
+  chef:
+    roles:
+      - app
+web1:
+  &lt;&lt;: *web_default
+  ip: 192.168.1.2
+web2:
+  &lt;&lt;: *web_default
+  ip: 192.168.1.3
+web3:
+  &lt;&lt;: *web_default
+  ip: 192.168.1.4
+app1:
+  &lt;&lt;: *app_default
+  ip: 192.168.1.12
+app2:
+  &lt;&lt;: *app_default
+  ip: 192.168.1.13
+app3:
+  &lt;&lt;: *app_default
+  ip: 192.168.1.14
+db1:
+  &lt;&lt;: *default
+  ip: 192.168.1.22
+  chef:
+    roles:
+      - database_master
+db2:
+  &lt;&lt;: *default
+  ip: 192.168.1.23
+  chef:
+    roles:
+      - database_slave</code></pre></noscript></div>
+
+
+<p>Now, using more YAML relational trees, we&#8217;ve defined some additional defaults and chef roles for those defaults, and even some distinct roles for the database servers.</p>
+
+<p>Now lets take a look at the provisioner_chef.yml datafile and how it can be used:</p>
+
+<div><script src='https://gist.github.com/3988675.js?file=chef_provisioner.yml'></script>
+<noscript><pre><code>chef:
+  log_level: 'debug'
+  environment: &quot;development&quot;
+  roles:
+    - base
+    - vagrant</code></pre></noscript></div>
+
+
+<p>This chef provisioner configuration defines the log level for running chef-solo, the environment (if you use them) and the default roles that are assigned to every system using this provisioner. Since <em>base</em> is in here, we could safely remove it from the nodes.yml file.</p>
+
+<p>Now here&#8217;s the environment:</p>
+
+<div><script src='https://gist.github.com/3988675.js?file=1_vagrant_status'></script>
+<noscript><pre><code>ashamim@ataxerxes:superfastjellyfish $ vagrant status
+Current VM states:
+
+web1                     not created
+web2                     not created
+web3                     not created
+app1                     not created
+app2                     not created
+app3                     not created
+db1                      not created
+db2                      not created
+</code></pre></noscript></div>
+
+
+<p>You can do a similar thing with <strong>provisioner_puppet.yml</strong>. For an example, see the <a href="https://github.com/fup/vagrant-hitch/tree/master/example">example</a> directory.</p>
+
+<p>Future features that are under discussion are:</p>
+
+<ul>
+<li>Hosted Chef integration</li>
+<li>Full puppetmaster integration (run a puppetmaster inside a vagrant environment and make it a dependency)</li>
+<li>Bootstrapping for vagrant-hitch</li>
+<li>Full integration with Vagrant 2.0 (data driven infrastructure EVERYWHERE!!!)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rapid prototyping with vagrant]]></title>
+    <link href="http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant/"/>
+    <updated>2012-10-25T16:17:00-05:00</updated>
+    <id>http://azizshamim.github.com/blog/2012/10/25/rapid-prototyping-with-vagrant</id>
+    <content type="html"><![CDATA[<p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/ashamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application &#8220;by tuesday because we have a zillion new users&#8221;.</p>
+
+<p>The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in <a href="http://vagrantup.com">Vagrant</a> lead to a pretty blatant bottleneck: the <a href="http://vagrantup.com/v1/docs/vagrantfile.html">Vagrantfile</a>.</p>
+
+<p>Defining an environment with 20 different servers in some configuration that might overlap and might not is a complicated thing in the standard vagrant method:</p>
+
+<pre><code>Vagrant::Config.run do |config|
+  config.vm.define :web do |web_config|
+    web_config.vm.box = "web"
+    web_config.vm.network :hostonly, "10.1.1.1"
+    web_config.vm.forward_port 80, 8080
+    web_config.vm.provision :puppet do |puppet|
+      puppet.module_path = "moduledir"
+      puppet.manifest_file = "manifest/web_manifest.pp"
+    end
+  end
+
+  config.vm.define :db do |db_config|
+    db_config.vm.box = "db"
+    db_config.vm.network :hostonly, "10.1.1.2"
+    db_config.vm.forward_port 3306, 3306
+    db_config.vm.provision :puppet do |puppet|
+      puppet.module_path = "moduledir"
+      puppet.manifest_file = "manifest/db_manifest.pp"
+    end
+  end
+end
+</code></pre>
+
+<p>Now do this 20 times! ZOMG!</p>
+
+<p>So <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> came up with another way of doing this: <a href="https://github.com/fup/vagrant-hitch">Hitch!</a></p>
 
 <!--more-->
 
