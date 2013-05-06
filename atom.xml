@@ -4,7 +4,7 @@
   <title><![CDATA[{blog}]]></title>
   <link href="http://azizshamim.github.com/atom.xml" rel="self"/>
   <link href="http://azizshamim.github.com/"/>
-  <updated>2012-11-08T13:32:05-06:00</updated>
+  <updated>2013-05-06T16:02:17-05:00</updated>
   <id>http://azizshamim.github.com/</id>
   <author>
     <name><![CDATA[Aziz Shamim]]></name>
@@ -12,6 +12,189 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How do I break veewee? Let me count...]]></title>
+    <link href="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/"/>
+    <updated>2013-05-06T14:30:00-05:00</updated>
+    <id>http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways</id>
+    <content type="html"><![CDATA[<p>In this post, we explore the interactions between <a href="vagrant">Vagrant</a> and <a href="veewee">Veewee</a>. These two tools are used to build (<a href="veewee">Veewee</a>) and deploy/provision servers (<a href="vagrant">Vagrant</a>).</p>
+
+<p>The following interactions have been tested and are:</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Vagrant \ Veewee                    </th>
+<th> veewee 0.3.7   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> no vagrant                          </td>
+<td> <a href="#a1">broken</a></td>
+</tr>
+<tr>
+<td></td>
+<td> vagrant 1.2.2                       </td>
+<td> <a href="#a2">broken</a></td>
+</tr>
+<tr>
+<td></td>
+<td> vagrant 1.2.2 via plugin            </td>
+<td> <a href="#a3">broken</a></td>
+</tr>
+<tr>
+<td></td>
+<td> vagrant 1.0.7 rubygems              </td>
+<td> <a href="#a4">broken</a></td>
+</tr>
+<tr>
+<td></td>
+<td> vagrant 1.0.7 rubygems + net-scp    </td>
+<td> <a href="#a5">works!</a></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2><a id="a1">veewee gem installed via rubygems with no vagrant</a></h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ gem install veewee
+</span><span class='line'>ERROR:  While executing gem ... (Gem::DependencyError)
+</span><span class='line'>    Unable to resolve dependencies: fog requires net-scp (~&gt; 1.1); vagrant requires net-scp (~&gt; 1.0.4)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><a id="a2">veewee gem installed via rubygems with vagrant 1.2.2</a></h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ gem install veewee
+</span><span class='line'>ERROR:  While executing gem ... (Gem::DependencyError)
+</span><span class='line'>    Unable to resolve dependencies: fog requires net-scp (~&gt; 1.1); vagrant requires net-scp (~&gt; 1.0.4)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><a id="a3">veewee plugin installed via vagrant plugin with vagrant 1.2.2</a></h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ vagrant plugin install veewee
+</span><span class='line'>Installing the 'veewee' plugin. This can take a few minutes...
+</span><span class='line'>/Applications/Vagrant/embedded/lib/ruby/1.9.1/rubygems/dependency_installer.rb:153:in `gather_dependencies': Unable to resolve dependencies: fog requires net-scp (~&gt; 1.1); vagrant requires net-scp (~&gt; 1.0.4) (Gem::DependencyError)
+</span><span class='line'>  from /Applications/Vagrant/embedded/lib/ruby/1.9.1/rubygems/dependency_installer.rb:267:in `install'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/action/install_gem.rb:38:in `block in call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/gem_helper.rb:42:in `block in with_environment'
+</span><span class='line'>  from /Applications/Vagrant/embedded/lib/ruby/1.9.1/rubygems/user_interaction.rb:40:in `use_ui'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/gem_helper.rb:41:in `with_environment'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/action/install_gem.rb:28:in `call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/action/warden.rb:34:in `call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/action/bundler_check.rb:20:in `call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/action/warden.rb:34:in `call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/action/builder.rb:116:in `call'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/action/runner.rb:61:in `block in run'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/util/busy.rb:19:in `busy'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/action/runner.rb:61:in `run'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/command/base.rb:17:in `action'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/command/install.rb:44:in `execute'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/plugins/commands/plugin/command/root.rb:47:in `execute'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/cli.rb:46:in `execute'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/lib/vagrant/environment.rb:467:in `cli'
+</span><span class='line'>  from /Applications/Vagrant/embedded/gems/gems/vagrant-1.2.2/bin/vagrant:84:in `&lt;top (required)&gt;'
+</span><span class='line'>  from /Applications/Vagrant/bin/../embedded/gems/bin/vagrant:23:in `load'
+</span><span class='line'>  from /Applications/Vagrant/bin/../embedded/gems/bin/vagrant:23:in `&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><a id="a4">veewee gem installed via rubygems with no vagrant</a></h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ gem list
+</span><span class='line'>
+</span><span class='line'>*** LOCAL GEMS ***
+</span><span class='line'>...snip...
+</span><span class='line'>vagrant (1.0.7)
+</span><span class='line'>
+</span><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ gem install veewee
+</span><span class='line'>ERROR:  While executing gem ... (Gem::DependencyError)
+</span><span class='line'>    Unable to resolve dependencies: fog requires net-scp (~&gt; 1.1)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But!!!!</p>
+
+<h2><a id="a4">veewee gem installed via rubygems with net-scp (2 versions)</a></h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p374)$ gem install veewee
+</span><span class='line'>Fetching: vagrant-1.0.7.gem (100%)
+</span><span class='line'>Fetching: veewee-0.3.7.gem (100%)
+</span><span class='line'>Successfully installed vagrant-1.0.7
+</span><span class='line'>Successfully installed veewee-0.3.7
+</span><span class='line'>2 gems installed</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why do you ask&#8230; how do you &#8230; what the what what?</p>
+
+<p>well&#8230; i think this has something to do with it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ashamim@ataxerxes:~ (ruby-1.9.3-p194@vagrant)$ gem list
+</span><span class='line'>
+</span><span class='line'>*** LOCAL GEMS ***
+</span><span class='line'>
+</span><span class='line'>...snip...
+</span><span class='line'>net-scp (1.1.0, 1.0.4)
+</span><span class='line'>...snip...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since I have all those gems installed, the dependencies are <em>managed</em> and then install.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rapid prototyping with vagrant-hitch]]></title>

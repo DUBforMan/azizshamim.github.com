@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>{blog}</title>
+  <title>How do I break veewee? Let me count... - {blog}</title>
   <meta name="author" content="Aziz Shamim">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://azizshamim.github.com/">
+  <link rel="canonical" href="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -73,15 +73,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/">How Do I Break Veewee? Let Me Count&#8230;</a></h1>
+      <h1 class="entry-title">How Do I Break Veewee? Let Me Count...</h1>
     
     
       <p class="meta">
@@ -104,7 +101,7 @@
   </header>
 
 
-  <div class="entry-content"><p>In this post, we explore the interactions between <a href="vagrant">Vagrant</a> and <a href="veewee">Veewee</a>. These two tools are used to build (<a href="veewee">Veewee</a>) and deploy/provision servers (<a href="vagrant">Vagrant</a>).</p>
+<div class="entry-content"><p>In this post, we explore the interactions between <a href="vagrant">Vagrant</a> and <a href="veewee">Veewee</a>. These two tools are used to build (<a href="veewee">Veewee</a>) and deploy/provision servers (<a href="vagrant">Vagrant</a>).</p>
 
 <p>The following interactions have been tested and are:</p>
 
@@ -280,22 +277,16 @@
 
 <p>Since I have all those gems installed, the dependencies are <em>managed</em> and then install.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/">Rapid Prototyping With Vagrant-hitch</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Aziz Shamim</span></span>
+
+      
 
 
 
@@ -307,63 +298,38 @@
   
 
 
-<time datetime="2012-10-25T16:17:00-05:00" pubdate data-updated="true">Oct 25<span>th</span>, 2012</time>
-        
-      </p>
+<time datetime="2013-05-06T14:30:00-05:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/devops/'>devops</a>, <a class='category' href='/blog/categories/vagrant/'>vagrant</a>, <a class='category' href='/blog/categories/veewee/'>veewee</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/" data-via="azizshamim" data-counturl="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/" >Tweet</a>
+  
+  
+  
+</div>
 
-
-  <div class="entry-content"><p>My former consulting partner <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> had a few start-ups as clients who, inevitably, needed to deploy their application &#8220;by tuesday because we have a zillion new users&#8221;.</p>
-
-<p>The fast and furious nature of the start-up world and the consistent need to model new and relatively distinct environments in <a href="http://vagrantup.com">Vagrant</a> lead to a pretty blatant bottleneck: the <a href="http://vagrantup.com/v1/docs/vagrantfile.html">Vagrantfile</a>.</p>
-
-<p>Defining an environment with 20 different servers in some configuration that might overlap and might not is a complicated thing in the standard vagrant method:</p>
-
-<pre><code>Vagrant::Config.run do |config|
-  config.vm.define :web do |web_config|
-    web_config.vm.box = "web"
-    web_config.vm.network :hostonly, "10.1.1.1"
-    web_config.vm.forward_port 80, 8080
-    web_config.vm.provision :puppet do |puppet|
-      puppet.module_path = "moduledir"
-      puppet.manifest_file = "manifest/web_manifest.pp"
-    end
-  end
-
-  config.vm.define :db do |db_config|
-    db_config.vm.box = "db"
-    db_config.vm.network :hostonly, "10.1.1.2"
-    db_config.vm.forward_port 3306, 3306
-    db_config.vm.provision :puppet do |puppet|
-      puppet.module_path = "moduledir"
-      puppet.manifest_file = "manifest/db_manifest.pp"
-    end
-  end
-end
-</code></pre>
-
-<p>Now do this 20 times! ZOMG!</p>
-
-<p>So <a href="http://github.com/jfryman">jfryman</a> and <a href="http://github.com/azizshamim">I</a> came up with another way of doing this: <a href="https://github.com/fup/vagrant-hitch">Hitch!</a></p>
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/" title="Previous Post: Rapid prototyping with vagrant-hitch">&laquo; Rapid prototyping with vagrant-hitch</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/25/rapid-prototyping-with-vagrant-hitch/">Read on &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -371,7 +337,7 @@ end
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/">How do I break veewee? Let me count&#8230;</a>
+        <a href="/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/">How do I break veewee? Let me count...</a>
       </li>
     
       <li class="post">
@@ -384,7 +350,7 @@ end
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/azizshamim">@azizshamim</a> on GitHub
@@ -414,7 +380,7 @@ end
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -430,6 +396,7 @@ end
 
   
 </aside>
+
 
     </div>
   </div>
