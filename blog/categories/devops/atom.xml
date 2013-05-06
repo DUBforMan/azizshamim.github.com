@@ -4,7 +4,7 @@
   <title><![CDATA[Category: devops | {blog}]]></title>
   <link href="http://azizshamim.github.com/blog/categories/devops/atom.xml" rel="self"/>
   <link href="http://azizshamim.github.com/"/>
-  <updated>2013-05-06T16:02:17-05:00</updated>
+  <updated>2013-05-06T16:16:07-05:00</updated>
   <id>http://azizshamim.github.com/</id>
   <author>
     <name><![CDATA[Aziz Shamim]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How do I break veewee? Let me count...]]></title>
-    <link href="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways/"/>
+    <link href="http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-veewee-let-me-count/"/>
     <updated>2013-05-06T14:30:00-05:00</updated>
-    <id>http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-thee-let-me-count-the-ways</id>
+    <id>http://azizshamim.github.com/blog/2013/05/06/how-do-i-break-veewee-let-me-count</id>
     <content type="html"><![CDATA[<p>In this post, we explore the interactions between <a href="vagrant">Vagrant</a> and <a href="veewee">Veewee</a>. These two tools are used to build (<a href="veewee">Veewee</a>) and deploy/provision servers (<a href="vagrant">Vagrant</a>).</p>
 
 <p>The following interactions have been tested and are:</p>
